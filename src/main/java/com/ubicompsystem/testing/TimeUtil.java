@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 
 public final class TimeUtil {
 
-    public static Rounding roundTo( long target ){
+    public static Rounding round( long target ){
         return new Rounding(target);
     }
 
-    public static TimestampRounding roundTo( Timestamp time ){
+    public static TimestampRounding round( Timestamp time ){
         return new TimestampRounding(time);
     }
 
@@ -19,12 +19,12 @@ public final class TimeUtil {
             this.rounding = new Rounding(time.getTime());
         }
 
-        public Timestamp nearestMillisecond( long interval ){
-            return new Timestamp(this.rounding.nearest(interval));
+        public Timestamp toNearestMillisecond( long interval ){
+            return new Timestamp(this.rounding.toNearest(interval));
         }
 
-        public Timestamp nearestSecond( long interval ){
-            return new Timestamp(this.rounding.nearest(interval * 1000));
+        public Timestamp toNearestSecond( long interval ){
+            return new Timestamp(this.rounding.toNearest(interval * 1000));
         }
     }
 
@@ -36,7 +36,7 @@ public final class TimeUtil {
             target = value;
         }
 
-        public Long nearest( long interval ){
+        public Long toNearest( long interval ){
             if( target > 0 ){
                 return target - ( target % interval );
             } else {
